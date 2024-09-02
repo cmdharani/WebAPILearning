@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebAPIAuthPratice.Data;
 using WebAPIAuthPratice.Model;
 
 namespace WebAPIAuthPratice.Controllers
@@ -7,12 +8,18 @@ namespace WebAPIAuthPratice.Controllers
     [ApiController]
     public class EmpController : ControllerBase
     {
-       
+        private readonly EmpDbContext _empDbContext;
+
+        public EmpController(EmpDbContext empDbContext)
+        {
+            _empDbContext = empDbContext;
+        }
+
+
         [HttpGet]
         public List<Employee> Employees()
         {
-            return new List<Employee> 
-            { new Employee { Id = 1, Email = "dsad@re.com",FirstName="asd",LastName="sa" } };
+            return _empDbContext.Employees.ToList();
         }
     }
 }
